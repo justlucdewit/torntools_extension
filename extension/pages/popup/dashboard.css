@@ -156,9 +156,9 @@ a.icon {
 
 #dashboard .cooldowns {
 	display: flex;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
 	width: 100%;
-	text-align: center;
-	justify-content: space-around;
 }
 
 #dashboard .cooldowns .cooldown {
@@ -180,6 +180,18 @@ a.icon {
 
 #dashboard #medical-cooldown .cooldown-name {
 	color: #5783fd;
+}
+
+#dashboard #education-cooldown .cooldown-name {
+	color: #fcf806;
+}
+
+#dashboard #investment-cooldown .cooldown-name {
+	color: #06fcf0;
+}
+
+#dashboard #rent-cooldown .cooldown-name {
+	color: #fd76f9;
 }
 
 /* Extra Information */

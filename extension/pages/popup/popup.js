@@ -187,10 +187,15 @@ async function setupDashboard() {
 			for (const bar of dashboard.findAll(".bar")) {
 				updateBarTimer(bar);
 			}
-		if (settings.apiUsage.user.cooldowns)
-			for (const cooldown of dashboard.findAll(".cooldowns .cooldown")) {
-				updateCooldownTimer(cooldown);
+		if (settings.apiUsage.user.cooldowns) {
+			for (const cooldown of ["drug", "booster", "medical"]) {
+				const cooldown_el = dashboard.find(`.cooldowns .cooldown#${cooldown}-cooldown`);
+				updateCooldownTimer(cooldown_el);
 			}
+
+			updateCooldownTimerDays(dashboard.find(`.cooldowns .cooldown#rent-cooldown`));
+			updateCooldownTimerDaysHoursMin(dashboard.find(`.cooldowns .cooldown#education-cooldown`));
+		}
 		updateUpdateTimer();
 		updateStatusTimer();
 
@@ -251,10 +256,17 @@ async function setupDashboard() {
 			}
 		if (settings.apiUsage.user.travel) updateTravelBar();
 		// Cooldowns
-		if (settings.apiUsage.user.cooldowns)
+		if (settings.apiUsage.user.cooldowns) {
 			for (const cooldown of ["drug", "booster", "medical"]) {
 				updateCooldown(cooldown, userdata.cooldowns[cooldown]);
 			}
+
+			dashboard.find(`#education-cooldown`).dataset.completed_at = userdata.timestamp ? (userdata.timestamp + userdata.education_timeleft) * 1000 : 0;
+			dashboard.find(`#rent-cooldown`).dataset.completed_at = userdata.timestamp ? (userdata.timestamp + 3600 * userdata.property.rental_period_remaining) * 1000 : 0;
+			updateCooldownTimerDays(dashboard.find(`#rent-cooldown`));
+			updateCooldownTimerDaysHoursMin(dashboard.find(`#education-cooldown`));
+		}
+
 		// Extra information
 		updateExtra();
 		updateActions();
@@ -498,6 +510,30 @@ async function setupDashboard() {
 			{ milliseconds: completed_at ? Math.max(completed_at - current, 0) : 0 },
 			{ type: "timer", daysToHours: true }
 		);
+	}
+
+	function updateCooldownTimerDaysHoursMin(cooldown) {
+		if (!cooldown.dataset)
+			return;
+
+		const dataset = cooldown.dataset;
+		const current = Date.now();
+
+		const completed_at = !isNaN(parseInt(dataset.completed_at)) ? parseInt(dataset.completed_at) : false;
+
+		cooldown.find(".cooldown-label").textContent = `${Math.ceil((new Date(completed_at) - new Date(current)) / 3600000)}h`;
+	}
+
+	function updateCooldownTimerDays(cooldown) {
+		if (!cooldown.dataset)
+			return;
+
+		const dataset = cooldown.dataset;
+		const current = Date.now();
+
+		const completed_at = !isNaN(parseInt(dataset.completed_at)) ? parseInt(dataset.completed_at) : false;
+
+		cooldown.find(".cooldown-label").textContent = `${Math.ceil((new Date(completed_at) - new Date(current)) / 3600000)} days`;
 	}
 
 	function updateUpdateTimer() {
