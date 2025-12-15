@@ -52,4 +52,10 @@
 	function removeNotes() {
 		removeContainer("Notes", { id: "sidebarNotes" });
 	}
+
+	// Re-initialize the feature one page reload
+	addEventListener("resize", debounce((event) => {
+		removeNotes();
+		showNotes();
+	}, 300));
 })();
