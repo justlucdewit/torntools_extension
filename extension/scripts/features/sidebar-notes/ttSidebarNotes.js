@@ -14,11 +14,17 @@
 		{
 			storage: ["settings.pages.sidebar.notes"],
 		},
-		null
+		null,
+		{
+			reinitializeOnResize: true
+		}
 	);
 
 	async function showNotes() {
 		await requireSidebar();
+
+		if (!document.find("h2=Information"))
+			return;
 
 		const { content } = createContainer("Notes", {
 			id: "sidebarNotes",
@@ -52,10 +58,4 @@
 	function removeNotes() {
 		removeContainer("Notes", { id: "sidebarNotes" });
 	}
-
-	// Re-initialize the feature one page reload
-	addEventListener("resize", debounce((event) => {
-		removeNotes();
-		showNotes();
-	}, 300));
 })();

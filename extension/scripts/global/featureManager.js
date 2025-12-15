@@ -153,6 +153,13 @@ class FeatureManager {
 		this.startFeature(newFeature).catch((error) => this.logError(`Failed to start "${name}".`, error));
 		this.startLoadListeners(newFeature);
 
+		if (options.reinitializeOnResize) {
+			addEventListener("resize", debounce((event) => {
+				this.startFeature(newFeature).catch((error) => this.logError(`Failed to start "${name}".`, error));
+				this.startLoadListeners(newFeature);
+			}, 300));
+		}
+
 		return newFeature;
 	}
 
