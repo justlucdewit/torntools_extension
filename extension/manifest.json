@@ -204,6 +204,7 @@
 				"scripts/features/company-addiction/ttCompanyAddiction.js",
 				"scripts/features/custom-links/ttCustomLinks.js",
 				"scripts/features/update-notice/ttUpdateNotice.js",
+				"scripts/features/sidebar-notes/ttSidebarMissions.js",
 				"scripts/features/sidebar-notes/ttSidebarNotes.js",
 				"scripts/features/computer-link/ttComputerLink.js",
 				"scripts/features/hide-gym-highlight/ttHideGymHighlight.js",
