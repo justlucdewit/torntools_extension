@@ -452,6 +452,7 @@ const DEFAULT_STORAGE = {
 			},
 			sidebar: {
 				notes: new DefaultSetting({ type: "boolean", defaultValue: true }),
+				missions: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				highlightEnergy: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				highlightNerve: new DefaultSetting({ type: "boolean", defaultValue: false }),
 				ocTimer: new DefaultSetting({ type: "boolean", defaultValue: true }),
